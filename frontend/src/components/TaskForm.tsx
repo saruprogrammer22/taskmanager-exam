@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useAddTask } from '../api/TaskApi';
 import axios from 'axios';
 
 const TaskForm = () => {
-
 
     const [task, setTask] = useState({
         title: "",
@@ -14,7 +12,8 @@ const TaskForm = () => {
         event.preventDefault();
         try {
             const response = await axios.post("http://localhost:8088/task", task);
-            console.log(response); // Log the response data
+            console.log(response.data); // Log the response data
+            window.location.reload()
         } catch (error) {
             console.error(error); // Log the error
         }
