@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 type TaskType = {
     taskId: number;
@@ -9,6 +10,7 @@ type TaskType = {
 
 function GetTask() {
 
+    // data tasks
     const [tasks, setTasks] = useState<TaskType[]>([]);
 
     const getTasks = async () => {
@@ -25,6 +27,8 @@ function GetTask() {
         getTasks();
     }, []);
 
+
+    // delete by id 
     const handleDelete = async (taskId: number) => {
         await axios.delete(`http://localhost:8088/task/${taskId}`)
         window.location.reload()
@@ -44,12 +48,20 @@ function GetTask() {
                         >
                             {task.status}
                         </span>
+                        <Link
+                            to={`/${task.taskId}`}
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+
+                        >
+                            update
+                        </Link>
                         <button
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
                             onClick={() => handleDelete(task.taskId)}
                         >
                             Delete
                         </button>
+
                     </li>
                 ))}
             </ul>

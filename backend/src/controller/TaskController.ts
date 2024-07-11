@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { json, Request, Response } from 'express';
 import con from '../config/db';
 
 
@@ -58,6 +58,26 @@ const updateTask = (req: Request, res: Response) => {
     }
 }
 
+
+const getTaskById = (req: Request, res: Response) => {
+    try {
+        const id = req.params.taskId;
+        const sql = "SELECT * FROM tasks WHERE taskId = ?";
+        con.query(sql, [id], (err, result) => {
+            if (err) {
+                return res.status(500).json({ Status: false, Error: "Query error", err: err });
+            }
+            if (result.length === 0) {
+                return res.status(404).json({ Status: false, Error: "Task not found" });
+            }
+            return res.status(200).json(result[0]);
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
 const deleteTask = (req: Request, res: Response) => {
     try {
         const id = req.params.taskId;
@@ -72,4 +92,8 @@ const deleteTask = (req: Request, res: Response) => {
     }
 }
 
-export default { createTasks, getTasks, updateTask, deleteTask }
+
+
+
+
+export default { createTasks, getTasks, updateTask, deleteTask, getTaskById }
