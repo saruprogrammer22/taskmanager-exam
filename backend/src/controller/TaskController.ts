@@ -23,7 +23,7 @@ const createTasks = async (req: Request, res: Response) => {
 }
 
 
-const getTasks = async (req: Request, res: Response) => {
+const getAllTasks = async (req: Request, res: Response) => {
     try {
         const sql = "SELECT * FROM `tasks`";
         con.query(sql, (err, result) => {
@@ -38,7 +38,7 @@ const getTasks = async (req: Request, res: Response) => {
 }
 
 
-const updateTask = (req: Request, res: Response) => {
+const updateTaskById = (req: Request, res: Response) => {
     try {
         const id = req.params.taskId;
         const sql = "UPDATE tasks set title = ?, status = ?  WHERE taskId = ?"
@@ -78,7 +78,7 @@ const getTaskById = (req: Request, res: Response) => {
     }
 };
 
-const deleteTask = (req: Request, res: Response) => {
+const deleteTaskById = (req: Request, res: Response) => {
     try {
         const id = req.params.taskId;
         const sql = "DELETE FROM tasks WHERE taskId =?";
@@ -96,4 +96,4 @@ const deleteTask = (req: Request, res: Response) => {
 
 
 
-export default { createTasks, getTasks, updateTask, deleteTask, getTaskById }
+export default { createTasks, getAllTasks, updateTaskById, deleteTaskById, getTaskById }
